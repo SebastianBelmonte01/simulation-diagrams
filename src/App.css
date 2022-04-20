@@ -5,4 +5,25 @@
 }
 body{
   background-color: #F4F9E9;
+  margin-bottom: 10%;
+}
+
+.container{   
+  text-align: justify;
+  margin: 3%;
+}
+
+.__input--grid{
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  grid-gap: 3%;
+  margin-top: 2%;
+}
+
+.table{
+  margin-top: 10%;
+}
+
+th, td{
+  border: solid 1px #000000;
 }

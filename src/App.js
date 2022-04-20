@@ -9,7 +9,7 @@ function App() {
     <Router>
       <Routes>
         <Route exact path ="/" element= {<Home title="Implementación de Diagramas de Flujo"/>} />
-        <Route exact path ="/dados" element= {<Dados />} />
+        <Route exact path ="/dados" element= {<Dados title="Problema de Lanzamiento de Dados"/>} />
       
       </Routes>
     </Router>
