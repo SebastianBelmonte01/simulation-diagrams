@@ -1,0 +1,24 @@
+.grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #284B63;
+    border-radius: 5%;
+}
+
+.grid__title{
+    color: #fff;
+    border-bottom: 1px solid #ffff;
+}
+
+.grid__image{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 30%;
+    height: 30%;
+}
+
+.grid:hover{
+    background-color: #021677;
+}
+

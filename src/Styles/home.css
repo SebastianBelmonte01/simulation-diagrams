@@ -1,0 +1,9 @@
+.home__grid{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-gap: 3%;
+}
+
+.home__grid-container{
+    margin: 10% 5% 0% 5%;;
+}
