@@ -1,0 +1,31 @@
+.general-container{
+    margin-top: 2%;
+    margin-bottom: 3%;
+
+}
+
+.table-container{
+    width: 100%;
+    margin-top: 2%;
+    margin-bottom: 3%;
+}
+
+.table-container table{
+    margin: 0 auto;
+}
+
+tr{
+    background-color: #fff;
+
+}
+
+th{
+    border: solid 1px black;
+}
+
+td{
+    background-color: #fff;
+    border: solid 1px black;
+    width: 200px;
+    
+}

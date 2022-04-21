@@ -4,116 +4,95 @@ import Footer from '../components/Footer';
 import Description from '../components/Description';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import Table from '../components/Table';
 
 
 import { randomNumberGenerator } from "../utils/ProductoMedios";
 
+let messagesMatrix = [];
 const diceCalculus = (totalSimulations, totalGames, gamePrice, homeLost) => {
-    const headers = ['Número de Juego', 'r Dado 1', 'r Dado 2', 'Dado 1', 'Dado 2', 'Suma Dados', 'Ganancia Neta'];
+
+    let simulationMatrix = []; //
+    let homeWinCounter;
+    let messages;
+
     for(let i = 0; i < totalSimulations; i++){
+        messages = []; 
+
+        homeWinCounter = 0;
         let matrix = [];
 
-        let gameNumber = [];
-        let rDice1Array = [];
-        let rDice2Array = [];
-        let dice1Array = [];
-        let dice2Array = [];
-        let sum = [];
-        let netIncomeArray = [];
-
-
-
-
         let netIncome = 0;
-        let homeWinCounter = 0;
-        let body = document.getElementsByTagName("body")[0];
-        let table = document.createElement("table");
-
-        let simule = document.createElement("h4");
-        let num = i + 1;
-        let textSimule = document.createTextNode("Simulación " + num + ": ");
-
-
-        simule.appendChild(textSimule);
-        table.appendChild(simule);
+        let netIncomeAverage = 0;
+        let probabilityHomeWins;
 
         for(let j = 0; j < totalGames; j++){
-            gameNumber.push(j+1);
+            let row = [];
+
+            row.push(j+1);
             let rDice1 = randomNumberGenerator();
-            rDice1Array.push(rDice1);
+            row.push(rDice1);
+
             let rDice2 = randomNumberGenerator();
-            rDice2Array.push(rDice2);
+            row.push(rDice2);
+
 
             let dice1 = Math.round(1 + (6 - 1) * rDice1);
-            dice1Array.push(dice1);
+            row.push(dice1);
 
             let dice2 = Math.round(1 + (6 - 1) * rDice2);
-            dice2Array.push(dice2);
+            row.push(dice2);
+
 
             
             let diceTotal = dice1 + dice2;
-            sum.push(diceTotal);
+            row.push(diceTotal);
+
 
             if(diceTotal !== 7){
-                netIncome += gamePrice;
+                netIncome += parseInt(gamePrice);
                 homeWinCounter++;
             }
             else{
-                netIncome = netIncome + gamePrice - homeLost;
+                netIncome = parseInt(netIncome) + parseInt(gamePrice) - parseInt(homeLost);
             }
-            netIncomeArray.push(netIncome);
+
+            netIncomeAverage += netIncome;
+      
+            row.push(netIncome);
 
 
-            // let gameNumber = [];
-            // let rDice1Array = [];
-            // let rDice2Array = [];
-            // let dice1Array = [];
-            // let dice2Array = [];
-            // let sum = [];
-            // let netIncomeArray = [];
-            matrix.push(gameNumber);
-            matrix.push(rDice1Array);
-            matrix.push(rDice2Array);
-            matrix.push(dice1Array);
-            matrix.push(dice2Array);
-            matrix.push(sum);
-            matrix.push(netIncomeArray);
 
+
+            matrix.push(row);
 
         }
+
+
+        netIncomeAverage = netIncomeAverage / totalGames;
+        probabilityHomeWins = (homeWinCounter * 100) / totalGames;
+
+
+
+        simulationMatrix.push(matrix);
+
+
+        messages.push('La ganancia promedio de la casa es ' + netIncomeAverage.toFixed(3));
+        messages.push('El número de veces que gana la casa es ' + homeWinCounter);
+        messages.push('La probabilidad de que gane la cas es de ' + probabilityHomeWins.toFixed(3));
         
+        messagesMatrix.push(messages);
         
-        let tblBody = document.createElement("tbody");
-        let row;
-
-        for(let h = 0; h < headers.length; h++) {
-            row = document.createElement("th");
-            let cell = document.createElement("tr");
-            let headerText = document.createTextNode(headers[h]);
-            cell.appendChild(headerText);
-            row.appendChild(cell);
-            tblBody.appendChild(row);
-        }
-        for(let m = 0; m < matrix.length; m++){
-            row = document.createElement("tr");
-            for(let u = 0; u < totalGames; u++){
-                let cell = document.createElement("td");
-                let game = document.createTextNode(matrix[m][u]);
-                cell.appendChild(game);
-                row.appendChild(cell);
-    
-            }
-            tblBody.appendChild(row);
-
-        }
-
-
-        table.appendChild(tblBody);
-        body.appendChild(table);
-        table.classList.add("table");
+        console.log(messages);
+        
     }
 
+
+    return simulationMatrix;
+
 }
+
+
 
 
 const Dados = ({title}) => {
@@ -122,6 +101,14 @@ const Dados = ({title}) => {
     const[totalGames, setTotalGames] = useState(0);
     const[gamePrice, setGamePrice] = useState(0);
     const[homeLost, setHomeLost] = useState(0);
+
+    const[headers, setHeaders] = useState([]);
+    const titles = ['Número de Juego', 'r Dado 1', 'r Dado 2', 'Dado 1', 'Dado 2', 'Suma Dados', 'Ganancia Neta'];
+
+    const[body, setBody] = useState([]);
+
+    const[information, setInformation] = useState([]);
+
 
 
 
@@ -136,8 +123,14 @@ const Dados = ({title}) => {
                 <Input message={'Costo del Juego'} onChange={ event => setGamePrice(event.target.value)} />
                 <Input message={'Pedida de la Casa'} onChange={ event => setHomeLost(event.target.value)} />
                 
-                <Button text={'Calcular'} onClick={() => {diceCalculus(totalSimulations, totalGames, gamePrice, homeLost)}}/>
+                <Button text={'Calcular'} onClick={() => {setHeaders(titles);
+                                                         setBody(diceCalculus(totalSimulations, totalGames, gamePrice, homeLost))
+                                                         setInformation(messagesMatrix);
+                                                         }}/>
             </div>
+
+            <Table headers={headers} bodyTable={body} information={information} />
+
 
 
         </div>
