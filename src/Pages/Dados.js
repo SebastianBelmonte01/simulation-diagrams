@@ -11,15 +11,48 @@ import { randomNumberGenerator } from "../utils/ProductoMedios";
 const diceCalculus = (totalSimulations, totalGames, gamePrice, homeLost) => {
     const headers = ['Número de Juego', 'r Dado 1', 'r Dado 2', 'Dado 1', 'Dado 2', 'Suma Dados', 'Ganancia Neta'];
     for(let i = 0; i < totalSimulations; i++){
+        let matrix = [];
+
+        let gameNumber = [];
+        let rDice1Array = [];
+        let rDice2Array = [];
+        let dice1Array = [];
+        let dice2Array = [];
+        let sum = [];
+        let netIncomeArray = [];
+
+
+
+
         let netIncome = 0;
         let homeWinCounter = 0;
+        let body = document.getElementsByTagName("body")[0];
+        let table = document.createElement("table");
+
+        let simule = document.createElement("h4");
+        let num = i + 1;
+        let textSimule = document.createTextNode("Simulación " + num + ": ");
+
+
+        simule.appendChild(textSimule);
+        table.appendChild(simule);
 
         for(let j = 0; j < totalGames; j++){
-            let dice1 = Math.round(1 + (6 - 1) * randomNumberGenerator());
-            let dice2 = Math.round(1 + (6 - 1) * randomNumberGenerator());
+            gameNumber.push(j+1);
+            let rDice1 = randomNumberGenerator();
+            rDice1Array.push(rDice1);
+            let rDice2 = randomNumberGenerator();
+            rDice2Array.push(rDice2);
 
+            let dice1 = Math.round(1 + (6 - 1) * rDice1);
+            dice1Array.push(dice1);
 
+            let dice2 = Math.round(1 + (6 - 1) * rDice2);
+            dice2Array.push(dice2);
+
+            
             let diceTotal = dice1 + dice2;
+            sum.push(diceTotal);
 
             if(diceTotal !== 7){
                 netIncome += gamePrice;
@@ -28,16 +61,30 @@ const diceCalculus = (totalSimulations, totalGames, gamePrice, homeLost) => {
             else{
                 netIncome = netIncome + gamePrice - homeLost;
             }
+            netIncomeArray.push(netIncome);
 
 
-            console.log('Simulacion: ', i, ' Juego: ', j);
-            console.log(diceTotal);
+            // let gameNumber = [];
+            // let rDice1Array = [];
+            // let rDice2Array = [];
+            // let dice1Array = [];
+            // let dice2Array = [];
+            // let sum = [];
+            // let netIncomeArray = [];
+            matrix.push(gameNumber);
+            matrix.push(rDice1Array);
+            matrix.push(rDice2Array);
+            matrix.push(dice1Array);
+            matrix.push(dice2Array);
+            matrix.push(sum);
+            matrix.push(netIncomeArray);
+
+
         }
         
-        let table = document.createElement("table");
+        
         let tblBody = document.createElement("tbody");
         let row;
-        let body = document.getElementsByTagName("body")[0];
 
         for(let h = 0; h < headers.length; h++) {
             row = document.createElement("th");
@@ -46,8 +93,21 @@ const diceCalculus = (totalSimulations, totalGames, gamePrice, homeLost) => {
             cell.appendChild(headerText);
             row.appendChild(cell);
             tblBody.appendChild(row);
+        }
+        for(let m = 0; m < matrix.length; m++){
+            row = document.createElement("tr");
+            for(let u = 0; u < totalGames; u++){
+                let cell = document.createElement("td");
+                let game = document.createTextNode(matrix[m][u]);
+                cell.appendChild(game);
+                row.appendChild(cell);
+    
+            }
+            tblBody.appendChild(row);
 
         }
+
+
         table.appendChild(tblBody);
         body.appendChild(table);
         table.classList.add("table");
