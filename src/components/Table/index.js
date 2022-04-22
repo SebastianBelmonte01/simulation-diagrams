@@ -8,7 +8,13 @@ const Table = ({ headers, bodyTable, information }) => {
                 bodyTable.map((matrix, index) =>
                     <div className="table-container">
                         <h4>Simulación número: {index+1}</h4>
-                        <h4>Info: {information[index]}</h4>
+                        <h4>Información:</h4>
+
+                        {
+                            information.map((info, indexi) =>
+                                 <span className="information--separator">{information[index][indexi]}</span>
+                            )
+                        }
 
                         <table>
                             <tbody>

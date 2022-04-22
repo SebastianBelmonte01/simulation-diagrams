@@ -14,6 +14,10 @@ const Home = ({title}) => {
         navigate('/dados');
     }   
     
+    const openPeople = () => {
+        navigate('/people');
+    } 
+
   return (
     <div>
         <Header title={title} />
@@ -29,7 +33,7 @@ const Home = ({title}) => {
                 <Grid title={'Problema de Llegada de Clientes'} 
                     src='/img/Grid/clientes.jpg'
                     buttonText = 'Abrir'
-                    onClick={() =>console.log('HOLA')}/>
+                    onClick={openPeople}/>
             </div>
 
             <div className="home__grid-container">

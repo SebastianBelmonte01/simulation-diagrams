@@ -29,3 +29,10 @@ td{
     width: 200px;
     
 }
+
+
+
+.information--separator{
+    display: flex;
+    flex-direction: row;
+}

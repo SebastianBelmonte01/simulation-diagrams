@@ -79,13 +79,13 @@ const diceCalculus = (totalSimulations, totalGames, gamePrice, homeLost) => {
 
         messages.push('La ganancia promedio de la casa es ' + netIncomeAverage.toFixed(3));
         messages.push('El número de veces que gana la casa es ' + homeWinCounter);
-        messages.push('La probabilidad de que gane la cas es de ' + probabilityHomeWins.toFixed(3));
+        messages.push('La probabilidad de que ganó la casa es de ' + probabilityHomeWins.toFixed(3));
         
         messagesMatrix.push(messages);
         
-        console.log(messages);
         
     }
+    console.log(messagesMatrix);
 
 
     return simulationMatrix;
