@@ -4,21 +4,105 @@ import Footer from '../components/Footer';
 import Description from '../components/Description';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import {randomNumberGenerator} from '../utils/ProductoMedios';
 import Table from '../components/Table';
+
+let messagesMatrix = [];
+
+const consumersCalculus = (totalSimulations, totalHours, cost, sellPrice, staticCost ) => {
+    let matrix = [];
+    for(let i = 0; i < totalSimulations; i++) {
+        let messages = [];
+        let information = [];
+ 
+
+        let netIncome = 0;
+        let totalDayArticles = 0;
+        for(let j = 0; j < totalHours; j++) {
+            let row = [];
+
+            row.push(j+1);
+
+            let totalArticles = 0;
+            let rCli = randomNumberGenerator();
+            row.push(rCli);
+
+            let comingCli = Math.round(4 * rCli);
+            row.push(comingCli);
+
+            for(let k = 0; k < comingCli; k++) {
+                let rProduct = randomNumberGenerator();
+                let boughtProducts;
+                if(rProduct <= 0.2){
+                    boughtProducts = 0;
+                }
+                else{
+                    if(rProduct <= 0.5){
+                      boughtProducts = 1;
+                    }
+                    else {
+                        if(rProduct <= 0.9){
+                            boughtProducts = 2;
+
+                        }
+                        else {
+                            boughtProducts = 3;
+                        }
+                    }
+                }
+                totalArticles += boughtProducts;
+
+            }
+            
+            totalDayArticles += totalArticles;
+            row.push(totalArticles);
+
+            information.push(row);
+
+
+
+        }
+        netIncome = (totalDayArticles * (sellPrice - cost)) - staticCost ;
+
+        console.log(netIncome);
+
+        // information.push(rClieArray);
+        // information.push(numClieArray);
+        // information.push(totalArticlesArray);
+
+        matrix.push(information);
+
+        messages.push('La ganancia neta promedio es ' + netIncome / totalHours);
+        console.log('Total Articulos' + totalDayArticles)
+        messages.push('La cantidad promedio de ventas es ' + totalDayArticles / totalHours);
+        console.log('Simulación');
+        messagesMatrix.push(messages);
+
+    }
+
+    console.log(matrix);
+    return matrix;
+    
+
+    
+}
 
 const Clientes = ({ title }) => {
 
     const[totalSimulations, setTotalSimulations] = useState(0);
     const[totalHours, setTotalHours] = useState(0);
-    const[gamePrice, setGamePrice] = useState(0);
-    const[homeLost, setHomeLost] = useState(0);
+    const[cost, setCost] = useState(0);
+    const[sellPrice, setSellPrice] = useState(0);
+    const[staticCost, setStaticCost] = useState(0);
 
     const[headers, setHeaders] = useState([]);
-    const titles = ['Número de Juego', 'r Dado 1', 'r Dado 2', 'Dado 1', 'Dado 2', 'Suma Dados', 'Ganancia Neta'];
+    const titles = ['Hora', 'r Cliente', 'Número de Clientes', 'Total de Artículos'];
 
     const[body, setBody] = useState([]);
 
     const[information, setInformation] = useState([]);
+
+
 
 
 
@@ -31,17 +115,19 @@ const Clientes = ({ title }) => {
                 <div className="__input--grid">
                     <Input message={'Cantidad de Simulaciones'} onChange={event => setTotalSimulations(event.target.value)} />
                     <Input message={'Cantidad de horas'} onChange={event => setTotalHours(event.target.value)} />
-                    <Input message={'Costo por día'} onChange={event => setGamePrice(event.target.value)} />
-                    <Input message={'Costo del artículo'} onChange={event => setHomeLost(event.target.value)} />
-                    <Input message={'Precio de venta'} />
+                    <Input message={'Costo del artículo'} onChange={event => setCost(event.target.value)} />
+                    <Input message={'Costo fijo'} onChange={event => setStaticCost(event.target.value)} />
+                   
+                    <Input message={'Precio de venta'} onChange={event => setSellPrice(event.target.value)} />
+                    
                     <Button text={'Calcular'} onClick={() => {
-                        // setHeaders(titles);
-                        // setBody(diceCalculus(totalSimulations, totalGames, gamePrice, homeLost))
-                        // setInformation(messagesMatrix);
+                        setHeaders(titles);
+                        setBody(consumersCalculus(totalSimulations, totalHours, cost, sellPrice, staticCost));
+                        setInformation(messagesMatrix);
                     }} />
                 </div> 
 
-                {/* <Table headers={headers} bodyTable={body} information={information} /> */}
+                <Table headers={headers} bodyTable={body} information={information} />
 
 
 
