@@ -18,6 +18,11 @@ const Home = ({title}) => {
         navigate('/people');
     } 
 
+    const openChicken = () => {
+        navigate('/gallina');
+
+    }
+
   return (
     <div>
         <Header title={title} />
@@ -40,7 +45,7 @@ const Home = ({title}) => {
                 <Grid title={'c) Problema de la Gallina Ponedora de Huevos'} 
                     src='/img/Grid/gallina.jpg'
                     buttonText = 'Abrir'
-                    onClick={() =>console.log('HOLA')}/>
+                    onClick={openChicken}/>
             </div>
 
             <div className="home__grid-container">
