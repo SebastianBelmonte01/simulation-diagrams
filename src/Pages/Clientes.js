@@ -11,6 +11,7 @@ let messagesMatrix = [];
 
 const consumersCalculus = (totalSimulations, totalHours, cost, sellPrice, staticCost ) => {
     let matrix = [];
+    messagesMatrix = [];
     for(let i = 0; i < totalSimulations; i++) {
         let messages = [];
         let information = [];
@@ -35,19 +36,15 @@ const consumersCalculus = (totalSimulations, totalHours, cost, sellPrice, static
                 let boughtProducts;
                 if(rProduct <= 0.2){
                     boughtProducts = 0;
-                }
-                else{
-                    if(rProduct <= 0.5){
-                      boughtProducts = 1;
-                    }
-                    else {
-                        if(rProduct <= 0.9){
-                            boughtProducts = 2;
-
-                        }
-                        else {
-                            boughtProducts = 3;
-                        }
+                } else{
+                      if(rProduct <= 0.5){
+                            boughtProducts = 1;
+                        } else {
+                            if(rProduct <= 0.9){
+                                boughtProducts = 2;
+                            } else {
+                                boughtProducts = 3;
+                            }
                     }
                 }
                 totalArticles += boughtProducts;
@@ -58,9 +55,6 @@ const consumersCalculus = (totalSimulations, totalHours, cost, sellPrice, static
             row.push(totalArticles);
 
             information.push(row);
-
-
-
         }
         netIncome = (totalDayArticles * (sellPrice - cost)) - staticCost ;
 
@@ -101,11 +95,6 @@ const Clientes = ({ title }) => {
     const[body, setBody] = useState([]);
 
     const[information, setInformation] = useState([]);
-
-
-
-
-
 
     return (
         <div>

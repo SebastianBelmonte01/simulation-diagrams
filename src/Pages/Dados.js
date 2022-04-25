@@ -18,7 +18,7 @@ const diceCalculus = (totalSimulations, totalGames, gamePrice, homeLost) => {
 
     for(let i = 0; i < totalSimulations; i++){
         messages = []; 
-
+        messagesMatrix = [];
         homeWinCounter = 0;
         let matrix = [];
 

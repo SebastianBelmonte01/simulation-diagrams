@@ -16,6 +16,8 @@ const chickenCalculus = (totalSimulations, days, chickenPrice, eggPrice) => {
     for(let i = 0; i < totalSimulations; i++) {
         let simulationMatrix = [];
         let messageRow = [];
+        messagesMatrix = [];
+
         let eggSum = 0;
         let aliveChickenSum = 0;
 
