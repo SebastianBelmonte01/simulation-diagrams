@@ -67,9 +67,7 @@ const consumersCalculus = (totalSimulations, totalHours, cost, sellPrice, static
         matrix.push(information);
 
         messages.push('La ganancia neta promedio es ' + netIncome / totalHours);
-        console.log('Total Articulos' + totalDayArticles)
         messages.push('La cantidad promedio de ventas es ' + totalDayArticles / totalHours);
-        console.log('Simulación');
         messagesMatrix.push(messages);
 
     }

@@ -13,6 +13,7 @@ let sugarCalculus = (totalSimulations, totalDays, orderCost, inventory, acquisit
     let matrix = [];
     messagesMatrix = [];
     for(let i = 0; i < totalSimulations; i++) {
+        let messagesRow = [];
         let row = [];
         let rowMatrix = [];
         let totalCost = 0;
@@ -31,7 +32,6 @@ let sugarCalculus = (totalSimulations, totalDays, orderCost, inventory, acquisit
             row = [];
             row.push(j+1);
             if((j+1) % 7 === 0){
-                console.log('HOLA');
                 pAzu = store - invAzu;
 
                 costoTotalAdq = costoTotalAdq + (pAzu * acquisition); 
@@ -44,7 +44,6 @@ let sugarCalculus = (totalSimulations, totalDays, orderCost, inventory, acquisit
                     costoTotalMantenimiento += (sellPrice * invAzu);
                 }
             } else {
-                console.log('ELse');
                 if(tent !== 0) {
                     tent--;
                     if(tent === 0){
@@ -80,6 +79,16 @@ let sugarCalculus = (totalSimulations, totalDays, orderCost, inventory, acquisit
         matrix.push(rowMatrix);
         totalCost = costoTotalMantenimiento + costoTotalAdq + costoTotalReorden;
         gananciaNeta = ingresoBruto  - totalCost ;
+
+        messagesRow.push('Costo de Mantenimiento Promedio ' + (costoTotalMantenimiento / totalDays).toFixed(3));
+        messagesRow.push('Costo de Adquisición Promedio ' + (costoTotalAdq / totalDays).toFixed(3));
+        messagesRow.push('Costo de Reorden es ' + (costoTotalReorden / totalDays).toFixed(3));
+        messagesRow.push('Costo Total ' + totalCost);
+        messagesRow.push('Ganancia neta ' + gananciaNeta);
+
+        console.log(messagesRow);
+        messagesMatrix.push(messagesRow);
+
     }
     return matrix;
 
@@ -122,8 +131,7 @@ const Azucar = ({title}) => {
                 <Button text={'Calcular'} onClick={() => {
                     setHeaders(titles);
                     setBody(sugarCalculus(totalSimulations, totalDays, orderCost, inventory, acquisition, sellPrice, store));
-                    // setBody(consumersCalculus(totalSimulations, totalHours, cost, sellPrice, staticCost));
-                    // setInformation(messagesMatrix);
+                    setInformation(messagesMatrix);
                 }} />
             </div> 
 

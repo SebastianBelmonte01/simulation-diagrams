@@ -11,14 +11,13 @@ import { randomNumberGenerator } from "../utils/ProductoMedios";
 
 let messagesMatrix = [];
 const diceCalculus = (totalSimulations, totalGames, gamePrice, homeLost) => {
-
+    messagesMatrix = [];
     let simulationMatrix = []; //
     let homeWinCounter;
     let messages;
 
     for(let i = 0; i < totalSimulations; i++){
         messages = []; 
-        messagesMatrix = [];
         homeWinCounter = 0;
         let matrix = [];
 
