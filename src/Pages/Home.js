@@ -20,7 +20,10 @@ const Home = ({title}) => {
 
     const openChicken = () => {
         navigate('/gallina');
+    }
 
+    const openSugar = () => {
+        navigate('/azucar');
     }
 
   return (
@@ -52,7 +55,7 @@ const Home = ({title}) => {
                 <Grid title={'d) Problema de la Agencia de Azúcar'} 
                     src='/img/Grid/azucar.jpg'
                     buttonText = 'Abrir'
-                    onClick={() =>console.log('HOLA')}/>
+                    onClick={openSugar}/>
             </div>
             
         </div>
