@@ -14,6 +14,7 @@ let sugarCalculus = (totalSimulations, totalDays, orderCost, inventory, acquisit
     let costoTotalDias = 0;
     let gananciaNetaDias = 0;
     let demandaInsatisfechaDias = 0;
+    //CAMBUO
 
     messagesMatrix = [];
     for(let i = 0; i < totalSimulations; i++) {
