@@ -10,6 +10,9 @@ import Table from '../components/Table';
 let messagesMatrix = [];
 
 const consumersCalculus = (totalSimulations, totalHours, cost, sellPrice, staticCost ) => {
+    let gananciaPromedio = 0;
+    let articulosVendidosProm = 0;
+
     let matrix = [];
     messagesMatrix = [];
     for(let i = 0; i < totalSimulations; i++) {
@@ -19,6 +22,7 @@ const consumersCalculus = (totalSimulations, totalHours, cost, sellPrice, static
 
         let netIncome = 0;
         let totalDayArticles = 0;
+
         for(let j = 0; j < totalHours; j++) {
             let row = [];
 
@@ -67,10 +71,15 @@ const consumersCalculus = (totalSimulations, totalHours, cost, sellPrice, static
         matrix.push(information);
 
         messages.push('La ganancia neta promedio es ' + netIncome / totalHours);
-        messages.push('La cantidad promedio de ventas es ' + totalDayArticles / totalHours);
+        messages.push('La cantidad de articulos vendidos por hora es ' + totalDayArticles / totalHours);
         messagesMatrix.push(messages);
 
+        gananciaPromedio += netIncome;
+        articulosVendidosProm += totalDayArticles; ;
+
     }
+    alert('La ganancia neta promedio por dia es ' + gananciaPromedio);
+    alert('La cantidad de articulos vendidos por dia es ' + articulosVendidosProm);
 
     console.log(matrix);
     return matrix;

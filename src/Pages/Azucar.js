@@ -11,14 +11,18 @@ let messagesMatrix = [];
 
 let sugarCalculus = (totalSimulations, totalDays, orderCost, inventory, acquisition, sellPrice, store) => {
     let matrix = [];
+    let costoTotalDias = 0;
+    let gananciaNetaDias = 0;
+    let demandaInsatisfechaDias = 0;
+
     messagesMatrix = [];
     for(let i = 0; i < totalSimulations; i++) {
         let messagesRow = [];
-        let row = [];
+        let row = [];   
         let rowMatrix = [];
         let totalCost = 0;
         let gananciaNeta = 0;
-        let invAzu = 700;
+        let invAzu = store;
         let costoTotalAdq = 0;
         let costoTotalReorden = 0;
         let costoTotalMantenimiento = 0;
@@ -27,18 +31,16 @@ let sugarCalculus = (totalSimulations, totalDays, orderCost, inventory, acquisit
         let dAzu = 0;
         let ingresoBruto = 0;
         let demandaInsatisfecha = 0;
+
         for(let j = 0; j < totalDays; j++) {
 
             row = [];
             row.push(j+1);
             if((j+1) % 7 === 0){
                 pAzu = store - invAzu;
-
-                costoTotalAdq = costoTotalAdq + (pAzu * acquisition); 
-                costoTotalReorden += orderCost;
+                costoTotalAdq += (pAzu * acquisition); 
+                costoTotalReorden += parseInt(orderCost);
                 let rTent = randomNumberGenerator();
-
-
                 tent = Math.round(1 + (2 * rTent));
                 if(invAzu > 0){
                     costoTotalMantenimiento += (sellPrice * invAzu);
@@ -52,8 +54,8 @@ let sugarCalculus = (totalSimulations, totalDays, orderCost, inventory, acquisit
                 }
 
                 let rAzu = randomNumberGenerator();
+                rAzu = rAzu === 1 ? 0.999999 : rAzu;
                 dAzu = Math.round(-100 * Math.log(1 - rAzu));
-
 
 
                 if(invAzu >= dAzu){
@@ -65,6 +67,7 @@ let sugarCalculus = (totalSimulations, totalDays, orderCost, inventory, acquisit
                     ingresoBruto += (invAzu * sellPrice);
                     invAzu = 0;
                 }
+
 
             }
 
@@ -80,16 +83,25 @@ let sugarCalculus = (totalSimulations, totalDays, orderCost, inventory, acquisit
         totalCost = costoTotalMantenimiento + costoTotalAdq + costoTotalReorden;
         gananciaNeta = ingresoBruto  - totalCost ;
 
-        messagesRow.push('Costo de Mantenimiento Promedio ' + (costoTotalMantenimiento / totalDays).toFixed(3));
-        messagesRow.push('Costo de Adquisición Promedio ' + (costoTotalAdq / totalDays).toFixed(3));
-        messagesRow.push('Costo de Reorden es ' + (costoTotalReorden / totalDays).toFixed(3));
-        messagesRow.push('Costo Total ' + totalCost);
-        messagesRow.push('Ganancia neta ' + gananciaNeta);
+        messagesRow.push('Costo Total ' + Number(totalCost).toFixed(3));
+        messagesRow.push('Ganancia neta ' + Number(gananciaNeta).toFixed(3));
+        messagesRow.push('Demanda Insatisfecha ' + demandaInsatisfecha);
 
-        console.log(messagesRow);
+        costoTotalDias += totalCost;
+        gananciaNetaDias += gananciaNeta;
+        demandaInsatisfechaDias += demandaInsatisfecha;
+
         messagesMatrix.push(messagesRow);
 
     }
+
+    console.log(costoTotalDias);
+
+    alert('Costo Total promedio ' + Number(costoTotalDias / totalSimulations).toFixed(3));
+    alert('Ganancia neta ' + Number(gananciaNetaDias / totalSimulations).toFixed(3));
+    alert('Demanda Insatisfecha ' + (demandaInsatisfechaDias / totalSimulations).toFixed(3));
+
+
     return matrix;
 
 }

@@ -14,6 +14,10 @@ let messagesMatrix = [];
 const chickenCalculus = (totalSimulations, days, chickenPrice, eggPrice) => {
     let matrix = [];
     messagesMatrix = [];
+    let ingresoBruto = 0;
+    let promedioDia = 0;
+    let cantidadPollosMuertos = 0;
+    let cantidadHuevosRotos = 0;
 
     for(let i = 0; i < totalSimulations; i++) {
         let simulationMatrix = [];
@@ -21,7 +25,8 @@ const chickenCalculus = (totalSimulations, days, chickenPrice, eggPrice) => {
 
         let eggSum = 0;
         let aliveChickenSum = 0;
-
+        let totalDeathEgg = 0;
+        let totalBrokenEgg = 0;
         let ib = 0;
         for(let j = 0; j < days; j++) {
             let row = [];
@@ -94,24 +99,34 @@ const chickenCalculus = (totalSimulations, days, chickenPrice, eggPrice) => {
 
             eggSum += totalEgg;
             aliveChickenSum += aliveEgg;
-            
-
-
             simulationMatrix.push(row);
             
-
+            totalDeathEgg += deathEgg;
+            totalBrokenEgg += brokenEgg;
         }
 
         ib = parseInt(eggSum * eggPrice) + parseInt(aliveChickenSum * chickenPrice);
 
         messageRow.push('El ingreso bruto es igual a ' + parseInt(ib) + ' Bs');
         messageRow.push('El ingreso promedio es igual a ' + (parseInt(ib)/parseInt(days)).toFixed(3) + ' Bs/dia');
+        messageRow.push('La cantidad de pollos que muere es igual a ' + totalDeathEgg);
+        messageRow.push('La cantidad de huevos rotos es igual a ' + totalBrokenEgg);
+
         messagesMatrix.push(messageRow);
+
+        ingresoBruto += ib;
+        promedioDia += (parseInt(ib)/parseInt(days));
+        cantidadPollosMuertos += totalDeathEgg;
+        cantidadHuevosRotos += totalBrokenEgg;
 
         matrix.push(simulationMatrix);
         console.log('Simulacion');
 
     }
+    alert('El ingreso bruto es igual a ' + (ingresoBruto / totalSimulations).toFixed(2)  + ' Bs');
+    alert('El ingreso promedio es igual a ' + (promedioDia / totalSimulations).toFixed(2) + ' Bs/dia');
+    alert('La cantidad de pollos que muere es igual a ' + (cantidadPollosMuertos / totalSimulations).toFixed(2));
+    alert('La cantidad de huevos rotos es igual a ' + (cantidadHuevosRotos / totalSimulations).toFixed(2));
     
     console.log(matrix);
 

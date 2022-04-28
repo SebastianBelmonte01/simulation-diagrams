@@ -16,6 +16,10 @@ const diceCalculus = (totalSimulations, totalGames, gamePrice, homeLost) => {
     let homeWinCounter;
     let messages;
 
+    let gananciaPromedio = 0;
+    let ganadasCasa = 0;
+    let probabilidadCasa = 0;
+
     for(let i = 0; i < totalSimulations; i++){
         messages = []; 
         homeWinCounter = 0;
@@ -49,11 +53,13 @@ const diceCalculus = (totalSimulations, totalGames, gamePrice, homeLost) => {
 
 
             if(diceTotal !== 7){
-                netIncome += parseInt(gamePrice);
                 homeWinCounter++;
+                netIncome += parseInt(gamePrice);
+
             }
             else{
-                netIncome = parseInt(netIncome) + parseInt(gamePrice) - parseInt(homeLost);
+                netIncome = parseInt(netIncome) - parseInt(gamePrice);
+
             }
 
             netIncomeAverage += netIncome;
@@ -69,7 +75,7 @@ const diceCalculus = (totalSimulations, totalGames, gamePrice, homeLost) => {
 
 
         netIncomeAverage = netIncomeAverage / totalGames;
-        probabilityHomeWins = (homeWinCounter * 100) / totalGames;
+        probabilityHomeWins = (homeWinCounter) / totalGames;
 
 
 
@@ -79,12 +85,21 @@ const diceCalculus = (totalSimulations, totalGames, gamePrice, homeLost) => {
         messages.push('La ganancia promedio de la casa es ' + netIncomeAverage.toFixed(3));
         messages.push('El número de veces que gana la casa es ' + homeWinCounter);
         messages.push('La probabilidad de que ganó la casa es de ' + probabilityHomeWins.toFixed(3));
+
+        gananciaPromedio += netIncomeAverage;
+        ganadasCasa += homeWinCounter;
+        probabilidadCasa += probabilityHomeWins;
         
         messagesMatrix.push(messages);
         
         
     }
-    console.log(messagesMatrix);
+
+    alert('La ganancia promedio de la casa en las simulaciones es de ' + gananciaPromedio / totalSimulations);
+    alert('El número de veces que gana la casa en promedio es ' + ganadasCasa / totalSimulations);
+    alert('La probabilidad que ganó la casa es de ' + probabilidadCasa / totalSimulations);
+
+
 
 
     return simulationMatrix;
